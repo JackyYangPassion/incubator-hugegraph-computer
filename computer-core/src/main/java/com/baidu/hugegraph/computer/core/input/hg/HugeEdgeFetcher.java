@@ -21,15 +21,20 @@ package com.baidu.hugegraph.computer.core.input.hg;
 
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+
 import com.baidu.hugegraph.computer.core.config.Config;
 import com.baidu.hugegraph.computer.core.input.EdgeFetcher;
 import com.baidu.hugegraph.computer.core.input.InputSplit;
 import com.baidu.hugegraph.driver.HugeClient;
 import com.baidu.hugegraph.structure.graph.Edge;
 import com.baidu.hugegraph.structure.graph.Shard;
+import com.baidu.hugegraph.util.Log;
 
 public class HugeEdgeFetcher extends HugeElementFetcher<Edge>
                              implements EdgeFetcher {
+
+    private static final Logger LOG = Log.logger(HugeEdgeFetcher.class);
 
     public HugeEdgeFetcher(Config config, HugeClient client) {
         super(config, client);
@@ -38,6 +43,7 @@ public class HugeEdgeFetcher extends HugeElementFetcher<Edge>
     @Override
     public Iterator<Edge> fetch(InputSplit split) {
         Shard shard = toShard(split);
+        LOG.info("get a shard: {}", shard);
         return this.client().traverser().iteratorEdges(shard, this.pageSize());
     }
 
