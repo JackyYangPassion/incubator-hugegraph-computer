@@ -221,6 +221,7 @@ public class LoadService {
             assert this.currentVertex != null;
             Vertex vertex = this.currentVertex;
             this.currentVertex = null;
+            LOG.info("get edge :{}, Split:{}", vertex, this.currentSplit);
             return vertex;
         }
 
