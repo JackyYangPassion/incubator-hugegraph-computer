@@ -215,15 +215,12 @@ public class LoadService {
                     this.currentVertex = new DefaultVertex(graphFactory,
                                                            sourceId, null);
                     this.currentVertex.addEdge(edge);
-                    LOG.info("get edge :{}, Split:{}", vertex,
-                             this.currentSplit);
                     return vertex;
                 }
             }
             assert this.currentVertex != null;
             Vertex vertex = this.currentVertex;
             this.currentVertex = null;
-            LOG.info("get edge :{}, Split:{}", vertex, this.currentSplit);
             return vertex;
         }
 

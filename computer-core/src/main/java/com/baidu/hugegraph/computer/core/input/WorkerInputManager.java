@@ -96,7 +96,6 @@ public class WorkerInputManager implements Manager {
         while (iterator.hasNext()) {
             Vertex vertex = iterator.next();
             this.sendManager.sendEdge(vertex);
-            LOG.info("send a edge: {}", vertex);
         }
         this.sendManager.finishSend(MessageType.EDGE);
     }
