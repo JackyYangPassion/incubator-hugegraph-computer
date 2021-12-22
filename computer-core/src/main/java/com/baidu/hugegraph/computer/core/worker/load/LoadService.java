@@ -110,6 +110,7 @@ public class LoadService {
                  */
                 this.currentSplit = fetcher.nextVertexInputSplit();
                 if (this.currentSplit.equals(InputSplit.END_SPLIT)) {
+                    LOG.info("load a vertx END_SPLIT");
                     return false;
                 }
                 vertexFetcher.prepareLoadInputSplit(this.currentSplit);
@@ -174,7 +175,7 @@ public class LoadService {
                  */
                 this.currentSplit = fetcher.nextEdgeInputSplit();
                 if (this.currentSplit.equals(InputSplit.END_SPLIT)) {
-                    LOG.info("load a END_SPLIT");
+                    LOG.info("load a edge END_SPLIT");
                     return this.currentVertex != null;
                 }
                 edgeFetcher.prepareLoadInputSplit(this.currentSplit);

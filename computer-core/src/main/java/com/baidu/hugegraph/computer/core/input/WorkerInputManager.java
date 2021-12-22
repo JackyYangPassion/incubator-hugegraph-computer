@@ -21,6 +21,8 @@ package com.baidu.hugegraph.computer.core.input;
 
 import java.util.Iterator;
 
+import org.slf4j.Logger;
+
 import com.baidu.hugegraph.computer.core.common.ComputerContext;
 import com.baidu.hugegraph.computer.core.config.Config;
 import com.baidu.hugegraph.computer.core.graph.vertex.Vertex;
@@ -29,8 +31,11 @@ import com.baidu.hugegraph.computer.core.network.message.MessageType;
 import com.baidu.hugegraph.computer.core.rpc.InputSplitRpcService;
 import com.baidu.hugegraph.computer.core.sender.MessageSendManager;
 import com.baidu.hugegraph.computer.core.worker.load.LoadService;
+import com.baidu.hugegraph.util.Log;
 
 public class WorkerInputManager implements Manager {
+
+    private static final Logger LOG = Log.logger(WorkerInputManager.class);
 
     public static final String NAME = "worker_input";
 
@@ -81,6 +86,7 @@ public class WorkerInputManager implements Manager {
         Iterator<Vertex> iterator = this.loadService.createIteratorFromVertex();
         while (iterator.hasNext()) {
             Vertex vertex = iterator.next();
+            //LOG.info("send a vertex: {}", vertex);
             this.sendManager.sendVertex(vertex);
         }
         this.sendManager.finishSend(MessageType.VERTEX);
@@ -90,6 +96,7 @@ public class WorkerInputManager implements Manager {
         while (iterator.hasNext()) {
             Vertex vertex = iterator.next();
             this.sendManager.sendEdge(vertex);
+            LOG.info("send a edge: {}", vertex);
         }
         this.sendManager.finishSend(MessageType.EDGE);
     }

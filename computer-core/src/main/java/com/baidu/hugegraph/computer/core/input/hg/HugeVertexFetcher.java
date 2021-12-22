@@ -38,6 +38,7 @@ public class HugeVertexFetcher extends HugeElementFetcher<Vertex>
     @Override
     public Iterator<Vertex> fetch(InputSplit split) {
         Shard shard = toShard(split);
+        LOG.info("get a edge shard: {}", shard);
         return this.client().traverser().iteratorVertices(shard,
                                                           this.pageSize());
     }

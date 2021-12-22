@@ -61,13 +61,14 @@ public class MasterInputHandler implements InputSplitRpcService {
     @Override
     public InputSplit nextVertexInputSplit() {
         InputSplit split = this.vertexSplits.poll();
+        LOG.info("poll a vertx split: {}", split);
         return split != null ? split : InputSplit.END_SPLIT;
     }
 
     @Override
     public InputSplit nextEdgeInputSplit() {
         InputSplit split = this.edgeSplits.poll();
-        LOG.info("poll a split: {}", split);
+        LOG.info("poll a edge split: {}", split);
         return split != null ? split : InputSplit.END_SPLIT;
     }
 }

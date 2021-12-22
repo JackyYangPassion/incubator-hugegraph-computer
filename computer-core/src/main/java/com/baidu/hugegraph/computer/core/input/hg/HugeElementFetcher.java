@@ -22,14 +22,19 @@ package com.baidu.hugegraph.computer.core.input.hg;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+
 import com.baidu.hugegraph.computer.core.config.ComputerOptions;
 import com.baidu.hugegraph.computer.core.config.Config;
 import com.baidu.hugegraph.computer.core.input.ElementFetcher;
 import com.baidu.hugegraph.computer.core.input.InputSplit;
 import com.baidu.hugegraph.driver.HugeClient;
 import com.baidu.hugegraph.structure.graph.Shard;
+import com.baidu.hugegraph.util.Log;
 
 public abstract class HugeElementFetcher<T> implements ElementFetcher<T> {
+
+    protected static final Logger LOG = Log.logger(HugeElementFetcher.class);
 
     private final Config config;
     private final HugeClient client;
