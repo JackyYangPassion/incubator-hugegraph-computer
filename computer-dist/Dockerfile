@@ -6,3 +6,4 @@ WORKDIR /etc/local/hugegraph-computer
 RUN apt-get update && apt-get -y install gettext-base && apt-get -y install wget && apt-get -y install net-tools
 RUN wget https://github.com//alibaba/arthas/releases/download/arthas-all-3.5.4/arthas-bin.zip
 RUN unzip arthas-bin.zip
+echo 1 > /proc/sys/kernel/perf_event_paranoid
