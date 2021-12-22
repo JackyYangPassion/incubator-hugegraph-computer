@@ -23,9 +23,14 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.slf4j.Logger;
+
 import com.baidu.hugegraph.computer.core.rpc.InputSplitRpcService;
+import com.baidu.hugegraph.util.Log;
 
 public class MasterInputHandler implements InputSplitRpcService {
+
+    private static final Logger LOG = Log.logger(MasterInputHandler.class);
 
     private final InputSplitFetcher fetcher;
     private final Queue<InputSplit> vertexSplits;
@@ -62,6 +67,7 @@ public class MasterInputHandler implements InputSplitRpcService {
     @Override
     public InputSplit nextEdgeInputSplit() {
         InputSplit split = this.edgeSplits.poll();
+        LOG.info("poll a split: {}", split);
         return split != null ? split : InputSplit.END_SPLIT;
     }
 }

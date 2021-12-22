@@ -22,6 +22,8 @@ package com.baidu.hugegraph.computer.core.worker.load;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.slf4j.Logger;
+
 import com.baidu.hugegraph.computer.core.common.ComputerContext;
 import com.baidu.hugegraph.computer.core.config.ComputerOptions;
 import com.baidu.hugegraph.computer.core.config.Config;
@@ -40,8 +42,11 @@ import com.baidu.hugegraph.computer.core.input.InputSplit;
 import com.baidu.hugegraph.computer.core.input.VertexFetcher;
 import com.baidu.hugegraph.computer.core.rpc.InputSplitRpcService;
 import com.baidu.hugegraph.util.E;
+import com.baidu.hugegraph.util.Log;
 
 public class LoadService {
+
+    private static final Logger LOG = Log.logger(LoadService.class);
 
     private final GraphFactory graphFactory;
     private final Config config;
@@ -169,6 +174,7 @@ public class LoadService {
                  */
                 this.currentSplit = fetcher.nextEdgeInputSplit();
                 if (this.currentSplit.equals(InputSplit.END_SPLIT)) {
+                    LOG.info("load a END_SPLIT");
                     return this.currentVertex != null;
                 }
                 edgeFetcher.prepareLoadInputSplit(this.currentSplit);
