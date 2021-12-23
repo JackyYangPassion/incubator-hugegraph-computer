@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM mcr.microsoft.com/java/jre:11-zulu-ubuntu
 LABEL maintainer="HugeGraph Docker Maintainers <hugegraph@googlegroups.com>"
 ENV JAVA_OPTS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=2 -XshowSettings:vm"
 COPY . /etc/local/hugegraph-computer
