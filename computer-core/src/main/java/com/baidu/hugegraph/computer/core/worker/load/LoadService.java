@@ -21,7 +21,6 @@ package com.baidu.hugegraph.computer.core.worker.load;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.concurrent.atomic.LongAdder;
 
 import org.slf4j.Logger;
 
@@ -48,7 +47,6 @@ import com.baidu.hugegraph.util.Log;
 public class LoadService {
 
     private static final Logger LOG = Log.logger(LoadService.class);
-    public static final LongAdder EDGE_COUNT = new LongAdder();
 
     private final GraphFactory graphFactory;
     private final Config config;
@@ -195,7 +193,6 @@ public class LoadService {
             EdgeFetcher edgeFetcher = fetcher.edgeFetcher();
             while (edgeFetcher.hasNext()) {
                 hugeEdge = edgeFetcher.next();
-                EDGE_COUNT.increment();
                 Edge edge = this.convert(hugeEdge);
                 Id sourceId = HugeConverter.convertId(hugeEdge.sourceId());
                 if (this.currentVertex == null) {
