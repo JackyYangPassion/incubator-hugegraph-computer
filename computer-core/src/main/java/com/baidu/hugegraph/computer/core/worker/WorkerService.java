@@ -19,6 +19,8 @@
 
 package com.baidu.hugegraph.computer.core.worker;
 
+import static com.baidu.hugegraph.computer.core.worker.load.LoadService.EDGE_COUNT;
+
 import java.io.Closeable;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -367,6 +369,8 @@ public class WorkerService implements Closeable {
 
         this.bsp4Worker.workerInputDone();
         this.bsp4Worker.waitMasterInputDone();
+
+        LOG.info("load edge count: {}", EDGE_COUNT.sum());
 
         WorkerStat workerStat = this.computeManager.input();
 
