@@ -83,7 +83,7 @@ public abstract class FileElementFetcher<T extends GraphElement>
                                              fileInputSplit.struct());
         this.inputReader = this.createReader(fileInputSplit);
         this.localBatch = new FlatMapperIterator<>(this.inputReader, line -> {
-               List<T> allElements = new ArrayList<>();
+               List<T> allElements = new ArrayList<>(1);
                for (ElementBuilder<T> builder : this.builders) {
                    List<T> elements = this.buildElement(line, builder);
                    allElements.addAll(elements);
