@@ -490,11 +490,15 @@ public class ComputerJobDeployer {
         }
         Set<Map.Entry<String, String>> entries = paths.entrySet();
         for (Map.Entry<String, String> entry : entries) {
-            VolumeMount volumeMount = new VolumeMountBuilder()
-                    .withName(this.volumeName(entry.getKey()))
-                    .withMountPath(entry.getValue())
-                    .withReadOnly(true)
-                    .build();
+            String path = entry.getValue();
+            VolumeMountBuilder volumeMountBuilder = new VolumeMountBuilder()
+                               .withName(this.volumeName(entry.getKey()))
+                               .withMountPath(path);
+            if (!path.endsWith("/")) {
+                String subPath = path.substring(path.lastIndexOf("/") + 1);
+                volumeMountBuilder.withSubPath(subPath);
+            }
+            VolumeMount volumeMount = volumeMountBuilder.build();
             volumeMounts.add(volumeMount);
         }
 

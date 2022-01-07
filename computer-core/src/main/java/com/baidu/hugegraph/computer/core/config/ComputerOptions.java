@@ -345,7 +345,7 @@ public class ComputerOptions extends OptionHolder {
                     "output.hdfs_delimiter",
                     "The delimiter of hdfs output.",
                     disallowEmpty(),
-                    String.valueOf((char) 27)
+                    ","
             );
 
     public static final ConfigOption<Boolean> OUTPUT_HDFS_MERGE =

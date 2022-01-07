@@ -393,10 +393,10 @@ public class MiniKubeTest extends AbstractK8sTest {
 
         Map<String, String> params = new HashMap<>();
         params.put(KubeSpecOptions.CONFIG_MAP_PATHS.name(),
-                   String.format("[%s:/opt/configmap123]",
+                   String.format("[%s:/opt/configmap123/1.txt]",
                                  configMapName));
         params.put(KubeSpecOptions.SECRET_PATHS.name(),
-                   String.format("[%s:/opt/secret123]", secretName));
+                   String.format("[%s:/opt/secret123/]", secretName));
 
         String jobId = this.driver.submitJob(ALGORITHM_NAME, params);
 
