@@ -55,6 +55,7 @@ public class Lpa implements Computation<Id> {
     @Override
     public void compute(ComputationContext context, Vertex vertex,
                         Iterator<Id> messages) {
+        //messages 对应neighbor的value
         Id label = this.voteLabel(messages);
         Id value = vertex.value();
         if (!value.equals(label)) {
