@@ -179,6 +179,8 @@ public class MasterService implements Closeable {
      * After the superstep iteration, output the result.
      */
     public void execute() {
+        // 利用 ETCD 两个角色进行状态同步，从而实现分布式协调
+
         StopWatch watcher = new StopWatch();
         this.checkInited();
 
@@ -247,11 +249,19 @@ public class MasterService implements Closeable {
 
             this.bsp4Master.waitWorkersStepComputeDone(superstep);
             this.bsp4Master.masterStepComputeDone(superstep);
+
+
+            // 从 ETCD 获取 整体状态
             List<WorkerStat> workerStats =
                              this.bsp4Master.waitWorkersStepDone(superstep);
+
+
+            // 将分布式的状态，合并成一个<多个worker 状态>
             superstepStat = SuperstepStat.from(workerStats);
             SuperstepContext context = new SuperstepContext(superstep,
                                                             superstepStat);
+
+
             // Call master compute(), note the worker afterSuperstep() is done
             boolean masterContinue = this.masterComputation.compute(context);
             if (this.finishedIteration(masterContinue, context)) {
@@ -260,6 +270,7 @@ public class MasterService implements Closeable {
             this.managers.afterSuperstep(this.config, superstep);
             this.bsp4Master.masterStepDone(superstep, superstepStat);
 
+            // 每一个superstep结束后，都要进行一次输出
             LOG.info("{} MasterService superstep {} finished",
                      this, superstep);
         }
@@ -324,6 +335,9 @@ public class MasterService implements Closeable {
      * 1): Has run maxSuperStep times of superstep iteration.
      * 2): The mater-computation returns false that stop superstep iteration.
      * 3): All vertices are inactive and no message sent in a superstep.
+     * 结束迭代条件 没有问题 但是通过
+     * activeVertexCount == 0  && messageSendCount == 0 表达是不是有问题
+     *
      * @param masterContinue The master-computation decide
      * @return true if finish superstep iteration.
      */
@@ -335,6 +349,9 @@ public class MasterService implements Closeable {
         if (context.superstep() >= this.maxSuperStep - 1) {
             return true;
         }
+        long activeVertexCount = context.totalVertexCount() -
+                context.finishedVertexCount();
+//        return context.messageCount() == 0L && activeVertexCount == 0L && context.superstep() > 0;
         return false;
     }
 

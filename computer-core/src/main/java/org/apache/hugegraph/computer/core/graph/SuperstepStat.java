@@ -51,6 +51,7 @@ public class SuperstepStat implements Readable, Writable {
         this.active = true;
     }
 
+    //每一个分区进行汇总
     public void increase(PartitionStat partitionStat) {
         E.checkArgumentNotNull(partitionStat,
                                "The partitionStat can't be null");

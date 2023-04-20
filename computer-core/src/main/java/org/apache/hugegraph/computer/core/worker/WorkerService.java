@@ -246,6 +246,8 @@ public class WorkerService implements Closeable {
              */
             this.bsp4Worker.workerStepPrepareDone(superstep);
             this.bsp4Worker.waitMasterStepPrepareDone(superstep);
+
+            // 执行计算
             WorkerStat workerStat = this.computeManager.compute(context,
                                                                 superstep);
 
@@ -265,6 +267,7 @@ public class WorkerService implements Closeable {
             this.bsp4Worker.workerStepDone(superstep, workerStat);
             LOG.info("End computation of superstep {}", superstep);
 
+            // 获取master 通知的下一步的状态
             superstepStat = this.bsp4Worker.waitMasterStepDone(superstep);
             superstep++;
         }

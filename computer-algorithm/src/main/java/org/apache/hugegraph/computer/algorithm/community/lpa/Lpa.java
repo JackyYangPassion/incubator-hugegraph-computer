@@ -48,7 +48,7 @@ public class Lpa implements Computation<Id> {
     public void compute0(ComputationContext context, Vertex vertex) {
         Id value = vertex.id();
         vertex.value(value);
-        vertex.inactivate();
+        vertex.inactivate();//执行完 为什么将状态置为inactive？
         context.sendMessageToAllEdges(vertex, value);
     }
 
@@ -62,7 +62,7 @@ public class Lpa implements Computation<Id> {
             vertex.value(label);
             context.sendMessageToAllEdges(vertex, label);
         }
-        vertex.inactivate();
+        vertex.inactivate(); //执行完 为什么将状态置为inactive？
     }
 
     private Id voteLabel(Iterator<Id> messages) {

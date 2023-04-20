@@ -144,9 +144,11 @@ public class FileGraphPartition {
         long activeVertexCount;
         try {
             this.computation.beforeSuperstep(context);
+            // 超步数为0时，调用compute0方法，否则调用compute1方法
             activeVertexCount = superstep == 0 ?
                                 this.compute0(context) :
                                 this.compute1(context);
+
             this.computation.afterSuperstep(context);
         } catch (Exception e) {
             throw new ComputerException(
