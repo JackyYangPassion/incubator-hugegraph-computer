@@ -128,7 +128,7 @@ public class LpaTest extends AlgorithmTestBase {
         // check result
         HugeClient client =  client();
         ResultSet result  = client.gremlin().gremlin("g.V().filter(__.properties('lpa'))" +
-                                                     ".groupCount().by('lpa').count(Scope.local)").execute();
+                            ".groupCount().by('lpa').count(Scope.local)").execute();
 
         int communities = (int)result.data().get(0);
         Assert.assertEquals(4, communities);
