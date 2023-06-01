@@ -29,8 +29,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.LinkedHashMap;
-
 public class LpaTest extends AlgorithmTestBase {
 
     private static final String VERTX_LABEL = "tc_user";
