@@ -17,10 +17,7 @@
 
 package org.apache.hugegraph.computer.algorithm.community.lpa;
 
-import com.google.common.collect.ImmutableMap;
 import org.apache.hugegraph.computer.algorithm.AlgorithmTestBase;
-import org.apache.hugegraph.computer.core.common.ComputerContext;
-import org.apache.hugegraph.computer.core.output.hg.task.TaskManager;
 import org.apache.hugegraph.driver.GraphManager;
 import org.apache.hugegraph.driver.HugeClient;
 import org.apache.hugegraph.driver.SchemaManager;
@@ -33,7 +30,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class LpaTest extends AlgorithmTestBase {
 
@@ -41,52 +37,85 @@ public class LpaTest extends AlgorithmTestBase {
     private static final String EDGE_LABEL = "tc_know";
     private static final String PROPERTY_KEY = "tc_weight";
 
-    protected static final Map<String, Object> EXPECTED_RESULTS =
-            ImmutableMap.of("tc_A", 0.6666667F, "tc_B", 1.0F,
-                    "tc_C", 0.5F, "tc_D", 0.6666667F,
-                    "tc_E", 1.0F);
 
     @BeforeClass
     public static void setup() {
         clearAll();
 
         SchemaManager schema = client().schema();
-        schema.propertyKey(PROPERTY_KEY)
-                .asInt()
-                .ifNotExist()
-                .create();
+
+        schema.propertyKey(PROPERTY_KEY).asText().ifNotExist().create();
+
         schema.vertexLabel(VERTX_LABEL)
                 .properties(PROPERTY_KEY)
+                .enableLabelIndex(false)
                 .useCustomizeStringId()
                 .ifNotExist()
                 .create();
+
+
         schema.edgeLabel(EDGE_LABEL)
                 .sourceLabel(VERTX_LABEL)
                 .targetLabel(VERTX_LABEL)
                 .properties(PROPERTY_KEY)
+                .enableLabelIndex(false)
                 .ifNotExist()
                 .create();
 
         GraphManager graph = client().graph();
-        Vertex vA = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "tc_A",
-                PROPERTY_KEY, 1);
-        Vertex vB = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "tc_B",
-                PROPERTY_KEY, 1);
-        Vertex vC = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "tc_C",
-                PROPERTY_KEY, 1);
-        Vertex vD = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "tc_D",
-                PROPERTY_KEY, 1);
-        Vertex vE = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "tc_E",
-                PROPERTY_KEY, 1);
+        Vertex v0 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "0",
+                PROPERTY_KEY, "0");
+        Vertex v1 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "1",
+                PROPERTY_KEY, "1");
+        Vertex v2 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "2",
+                PROPERTY_KEY, "2");
+        Vertex v3 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "3",
+                PROPERTY_KEY, "3");
+        Vertex v4 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "4",
+                PROPERTY_KEY, "4");
+        Vertex v5 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "5",
+                PROPERTY_KEY, "5");
+        Vertex v6 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "6",
+                PROPERTY_KEY, "6");
+        Vertex v7 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "7",
+                PROPERTY_KEY, "7");
+        Vertex v8 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "8",
+                PROPERTY_KEY, "8");
+        Vertex v9 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "9",
+                PROPERTY_KEY, "9");
+        Vertex v10 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "10",
+                PROPERTY_KEY, "10");
+        Vertex v11 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "11",
+                PROPERTY_KEY, "11");
+        Vertex v12 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "12",
+                PROPERTY_KEY, "12");
+        Vertex v13 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "13",
+                PROPERTY_KEY, "13");
+        Vertex v14 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "14",
+                PROPERTY_KEY, "14");
+        Vertex v15 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "15",
+                PROPERTY_KEY, "15");
+        Vertex v16 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "16",
+                PROPERTY_KEY, "16");
+        Vertex v17 = graph.addVertex(T.LABEL, VERTX_LABEL, T.ID, "17",
+                PROPERTY_KEY, "17");
 
-        vA.addEdge(EDGE_LABEL, vB, PROPERTY_KEY, 1);
-        vA.addEdge(EDGE_LABEL, vC, PROPERTY_KEY, 1);
-        vB.addEdge(EDGE_LABEL, vC, PROPERTY_KEY, 1);
-        vC.addEdge(EDGE_LABEL, vD, PROPERTY_KEY, 1);
-        vD.addEdge(EDGE_LABEL, vA, PROPERTY_KEY, 1);
-        vD.addEdge(EDGE_LABEL, vE, PROPERTY_KEY, 1);
-        vE.addEdge(EDGE_LABEL, vD, PROPERTY_KEY, 1);
-        vE.addEdge(EDGE_LABEL, vC, PROPERTY_KEY, 1);
+
+        v0.addEdge(EDGE_LABEL, v4, PROPERTY_KEY, "1");
+        v0.addEdge(EDGE_LABEL, v7, PROPERTY_KEY, "1");
+        v0.addEdge(EDGE_LABEL, v10, PROPERTY_KEY, "1");
+        v0.addEdge(EDGE_LABEL, v11, PROPERTY_KEY, "1");
+        v0.addEdge(EDGE_LABEL, v14, PROPERTY_KEY, "1");
+        v0.addEdge(EDGE_LABEL, v16, PROPERTY_KEY, "1");
+        v1.addEdge(EDGE_LABEL, v17, PROPERTY_KEY, "1");
+        v2.addEdge(EDGE_LABEL, v5, PROPERTY_KEY, "1");
+        v2.addEdge(EDGE_LABEL, v6, PROPERTY_KEY, "1");
+        v2.addEdge(EDGE_LABEL, v8, PROPERTY_KEY, "1");
+        v2.addEdge(EDGE_LABEL, v12, PROPERTY_KEY, "1");
+        v3.addEdge(EDGE_LABEL, v9, PROPERTY_KEY, "1");
+        v3.addEdge(EDGE_LABEL, v13, PROPERTY_KEY, "1");
+        v9.addEdge(EDGE_LABEL, v15, PROPERTY_KEY, "1");
+        v16.addEdge(EDGE_LABEL, v5, PROPERTY_KEY, "1");
     }
 
     @AfterClass
@@ -100,10 +129,11 @@ public class LpaTest extends AlgorithmTestBase {
 
         // check result
         HugeClient client =  client();
-        ResultSet result  = client.gremlin().gremlin("g.V().group().by('lpa').by(T.id)").execute();
+        ResultSet result  = client.gremlin().gremlin("g.V().filter(__.properties('lpa')).groupCount().by('lpa').count(Scope.local)").execute();
 
-        LinkedHashMap resultRow = (LinkedHashMap)result.data().get(0);
-        Assert.assertEquals(4, resultRow.size());
+        int communities = (int)result.data().get(0);
+        Assert.assertEquals(4, communities);
+
 
     }
 }
